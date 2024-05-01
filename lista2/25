@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+  int n, cont = 0, eh_primo, i = 2, j, qtd_divisores;
+
+  scanf("%d", &n);
+  
+  while (cont < n) {
+    qtd_divisores = 0;
+    for (j = 1; j <= i; j++) {
+      if (i % j == 0) {
+        qtd_divisores += 1;
+      }
+    }
+
+    if (qtd_divisores == 2) {
+      eh_primo = 1;
+    } else
+      eh_primo = 0;
+
+    if (eh_primo) {
+      printf("%d ", i);
+      cont++;
+    }
+
+    i++;
+  }
+  return 0;
+}
