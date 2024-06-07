@@ -1,4 +1,2 @@
-# Intro-a-programacao
-Professor Lucas
+# projetos da faculdade de Engenharia da Computacao
 
-questoes dos trabalhos do classroom
