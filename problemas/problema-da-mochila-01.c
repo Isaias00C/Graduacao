@@ -35,6 +35,11 @@ int main(){
     }
 
     printf("valor maximo roubado: %d\n", mochila(capacidade, tamanho));
+    printf("itens roubados: ");
+    for(int i = 0; i < tamanho; i++){
+        printf("%d ", booleana[i]);
+    }
+    printf("\n");
 }
 
 int max(int a, int b){
@@ -44,14 +49,19 @@ int max(int a, int b){
 
 int mochila(int pesoMax, int t){
     if(memo[pesoMax][t] == -1){
-        if(pesoMax == 0  || t == 0) return 0;
+        if(t == 0) return 0;
 
-        if(p[t-1] > pesoMax) mochila(pesoMax, t-1);
+        if(p[t-1] > pesoMax){ 
+            booleana[t-1] = 0;
+            mochila(pesoMax, t-1);
+        }
         else{
             int incluindo = v[t-1] + mochila(pesoMax - p[t-1], t-1);
             int nao_incluindo = mochila(pesoMax, t-1);
-            
+
             memo[pesoMax][t] = max(incluindo, nao_incluindo);
+            if(max(incluindo, nao_incluindo) == incluindo) booleana[t-1] = 1;
+            else booleana[t-1] = 0;
             return max(incluindo, nao_incluindo);
         }
     }else{
