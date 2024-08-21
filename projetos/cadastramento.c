@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void cadastrar(int i);
 void recuperarInfos();
@@ -27,7 +28,7 @@ int main(){
                 return 0;
         }
 
-        getchar();
+        //getchar();
     }
 }
 
@@ -61,5 +62,15 @@ void cadastrar(int i){
 }
 
 void recuperarInfos(){
-    printf("Recuperar infos");
+    char cpf[15];
+    printf("Buscar Usuario de CPF %s", &cpf);
+
+    FILE* filename = fopen("cadatramento.txt", "r");
+    
+    char* s;
+
+    if(strcmp(cpf, )){
+
+    }
+
 }
