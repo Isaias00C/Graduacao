@@ -74,7 +74,7 @@ void recuperarInfos(){
     while(fgets(buffer, 999, filename)!=NULL){
         printf("%s", buffer);
         
-        if(strcmp(buffer, line)) {
+        if(!strcmp(buffer, line)) {
             puts(buffer);
             return;
         }
