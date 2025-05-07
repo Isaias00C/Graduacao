@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef unsigned char byte;
 
@@ -21,13 +23,29 @@ typedef struct tagList{
 
 void createList(TList* list, int sizeElement);
 void destroyList(TList* list);
-byte* firstList(TLIst* list);
+byte* firstList(TList* list);
 byte* nextList(TList* list);
 byte* lastList(TList* list);
 bool insertList(TList* list, byte* data);
 bool removeLastList(TList* list);
+void dumpItem(TElementList* item, int size);
+void dumpList(TList* list);
 
 int main(){
+    TList list;
+
+    createList(&list, sizeof(int));
+    dumpList(&list);
+
+    int a = 1;
+
+    insertList(&list, &a);
+    dumpList(&list);
+
+    int b = 2;
+
+    insertList(&list, &b);
+    dumpList(&list);
 
     return 0;
 }
@@ -40,7 +58,7 @@ void createList(TList* list, int sizeELement){
     list->curr = NULL;
 }
 
-void destroyList(TLIst* list){
+void destroyList(TList* list){
     if(list->nElements == 0){
         list->nElements = 0;
         list->sizeELement = 0;
@@ -54,7 +72,7 @@ byte* firstList(TList* list){
     return list->first->data;
 }
 
-byte* nextList(TList list){
+byte* nextList(TList* list){
     if(list->curr->nextELement != NULL) list->curr = list->curr->nextELement;
     return list->curr->data;
 }
@@ -72,7 +90,7 @@ bool insertList(TList* list, byte* data){
             //aloca area para o dado
             if( (item->data = malloc(list->sizeELement)) != NULL){
                 //copia o dado
-                memcpy(item->data, data, item->sizeELement);
+                memcpy(item->data, data, list->sizeELement);
                 //seta NULL para o proximo elemento pois a lista tem um so elemento
                 item->nextELement = NULL;
                 //atualiza os ponteiros da lista
@@ -93,7 +111,7 @@ bool insertList(TList* list, byte* data){
             //aloca area para o dado
             if( (item->data = malloc(list->sizeELement)) != NULL){
                 //copia o dado
-                memcpy(item->data, data, item->sizeELement);
+                memcpy(item->data, data, list->sizeELement);
                 item->nextELement = NULL;
                 list->last = item;
                 list->curr = item;
@@ -101,6 +119,50 @@ bool insertList(TList* list, byte* data){
             }
         }
     }
-
-
 }
+
+bool removeLastList(TList* list){
+    list->curr = list->first;
+
+    
+}
+
+void dumpItem(TElementList* item, int size){
+    int i;
+    byte* point;
+    printf("********************************\n");
+    
+    printf("Data = %x\n", item->data);
+    printf("next = %02x\n", item->nextELement);
+    printf("Conteudo data:\n");
+
+    point = (byte*)(item->data);
+
+    for(i = 0; i < size; i++){
+        printf("%04x : %02x : %03d : %c\n", point, (*point), (*point), (*point));
+        point++;
+    }
+
+    printf("********************************\n");
+}
+
+void dumpList(TList* list){
+    TElementList* item;
+
+    printf("No de elementos da lista: %d\n",list-> nElements);
+    printf("Tamanho dos elementos:    %d\n", list->sizeELement);
+    printf("Ponteiro first:           %02x\n", list->first);
+    printf("Ponteiro last:            %02x\n", list->last);
+    printf("Ponteiro curr:            %02x\n", list->curr);
+
+    if(list->first != NULL){   
+        item = list->first;
+        while(item != NULL){
+            dumpItem(item, list->sizeELement);
+            item = item->nextELement;
+        }
+    }
+
+    printf("-------------------------------\n");
+}
+
