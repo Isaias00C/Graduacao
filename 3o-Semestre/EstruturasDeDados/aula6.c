@@ -47,6 +47,9 @@ int main(){
     insertList(&list, &b);
     dumpList(&list);
 
+    removeLastList(&list);
+    dumpList(&list);
+
     return 0;
 }
 
@@ -124,7 +127,21 @@ bool insertList(TList* list, byte* data){
 bool removeLastList(TList* list){
     list->curr = list->first;
 
-    
+    for(int i = 0; i < ((list->nElements) - 2); i++){
+        list->curr = list->curr->nextELement;
+    }
+
+    TElementList* flag;
+
+    flag = list->last;
+
+    list->last = list->curr;
+
+    list->curr->nextELement = NULL;
+
+    list->nElements--;
+
+    free(flag);
 }
 
 void dumpItem(TElementList* item, int size){
