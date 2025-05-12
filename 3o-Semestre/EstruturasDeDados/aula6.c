@@ -37,14 +37,19 @@ int main(){
     createList(&list, sizeof(int));
     dumpList(&list);
 
-    int a = 1;
+    byte a = 1;
 
     insertList(&list, &a);
     dumpList(&list);
 
-    int b = 2;
+    byte b = 2;
 
     insertList(&list, &b);
+    dumpList(&list);
+
+    byte c = 7;
+
+    insertList(&list, &c);
     dumpList(&list);
 
     removeLastList(&list);
@@ -125,6 +130,8 @@ bool insertList(TList* list, byte* data){
 }
 
 bool removeLastList(TList* list){
+    if (list->nElements == 0) return false;
+    
     list->curr = list->first;
 
     for(int i = 0; i < ((list->nElements) - 2); i++){
@@ -141,6 +148,13 @@ bool removeLastList(TList* list){
 
     list->nElements--;
 
+    if(list->nElements == 0){
+        list->first = NULL;
+        list->curr = NULL;
+        list->last = NULL;
+    }
+
+    free(flag->data);
     free(flag);
 }
 
