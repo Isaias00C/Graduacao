@@ -8,6 +8,7 @@ typedef unsigned char byte;
 typedef struct tagElementList{
     byte* data; // ponteiro para o dado a ser armazenado na lista
     void* nextElement; // ponteiro para o proximo elemento da lista
+    void* prevElement;
 }TElementList;
 
 typedef struct tagList{
@@ -17,6 +18,7 @@ typedef struct tagList{
     TElementList* last; // ponteiro para o ultimo elemento da lista
     TElementList* curr; // ponteiro para o elemento atual da lista
     bool isCircle; // indica se a lista é circular
+    bool isDoubly; // indica se a lista é duplamente encadeada
 }TList;
 
 // metodos de acesso do objeto lista
@@ -117,6 +119,12 @@ bool insertList(TList* list, byte* data){
                 
                 // seta o proximo elemento
                 item->nextElement = list->isCircle ? item : NULL;
+                
+                if(list->isDoubly) {
+
+                    // seta o elemento anterior
+                    item->prevElement = list->isCircle ? item : NULL;
+                }
 
                 //atualiza os ponteiros da lista
                 list->first = item;
@@ -135,6 +143,7 @@ bool insertList(TList* list, byte* data){
             list->last->nextElement = item;
             if(list->nElements == 1){
                 list->first->nextElement = item;
+                list->first->prevElement = list->isCircle ? item : NULL;
             }
 
             // aloca area para o dado
@@ -144,10 +153,13 @@ bool insertList(TList* list, byte* data){
                 memcpy(item->data, data, list->sizeELement);
                 
                 item->nextElement  = list->isCircle ? list->first : NULL;
-                
+                item->prevElement = list->isDoubly ? list->last : NULL;
+
                 list->last = item;
                 list->curr = item;
                 list->nElements++;
+
+                if(list->isDoubly) list->first->prevElement = list->isCircle ? list->last : NULL;
 
             }
         }
@@ -170,6 +182,8 @@ bool removeLastList(TList* list){
     list->last = list->curr;
     list->curr->nextElement = list->isCircle ? list->first : NULL;
     
+    if(list->isDoubly) list->first->prevElement = list->isCircle ? list->last : NULL;
+
     list->nElements--;
 
     if(list->nElements == 0){
@@ -189,6 +203,7 @@ void dumpItem(TElementList* item, int size){
     
     printf("Data = %x\n", item->data);
     printf("next = %02x\n", item->nextElement);
+    printf("prev = %02x\n", item->prevElement);
     printf("Conteudo data:\n");
 
     point = (byte*)item->data;
