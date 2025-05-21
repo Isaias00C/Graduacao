@@ -30,12 +30,15 @@ byte* nextList(TList* list);
 byte* lastList(TList* list);
 byte* prevList(TList* list);
 bool insertList(TList* list, byte* data);
-bool removeLastList(TList* list);
+bool removeLastElement(TList* list);
+bool removeLastElement(TList* list);
+bool removeCurrElement(TList* list);
 void dumpItem(TElementList* item, int size);
 void dumpList(TList* list);
 void showItem(TElementList* item, int position);
 void showItems(TList* list, int numberOfElements);
 bool goFirst(TList* list);
+bool goNext(TList* list);
 
 int main(){
     TList list;
@@ -58,7 +61,15 @@ int main(){
     insertList(&list, &c);
     dumpList(&list);
 
-    removeLastList(&list);
+    int d = 15;
+    insertList(&list, &d);
+    dumpList(&list);
+
+    goFirst(&list);
+    goNext(&list);
+    goNext(&list);
+
+    removeCurrElement(&list);
     dumpList(&list);
 
     return 0;
@@ -166,7 +177,7 @@ bool insertList(TList* list, byte* data){
     }
 }
 
-bool removeLastList(TList* list){
+bool removeLastElement(TList* list){
     if (list->nElements == 0) return false;
     
     list->curr = list->first;
@@ -194,6 +205,62 @@ bool removeLastList(TList* list){
 
     free(flag->data);
     free(flag);
+}
+
+bool removeFirstElement(TList* list){
+    if (list->nElements == 0) return false;
+    
+    TElementList* flag;
+
+    flag = list->first;
+    list->first = list->first->nextElement;
+
+    if(list->isDoubly) list->first->prevElement = list->isCircle ? list->last : NULL;
+
+    list->last->nextElement = list->isCircle ? list->first : NULL;
+
+    list->nElements--;
+
+    if(list->nElements == 0){
+        list->first = NULL;
+        list->curr = NULL;
+        list->last = NULL;
+    }
+
+    free(flag->data);
+    free(flag);
+}
+
+bool removeCurrElement(TList* list){
+    TElementList* item;
+    TElementList* item2;
+
+    if(list->nElements == 0){
+        printf("Nao ha elementos na lista\n");
+        return false;
+    }
+
+    if((list->curr == list->last)) return removeLastElement(list);
+    if((list->curr == list->first)) return removeFirstElement(list);
+
+    item = list->curr;
+
+    goFirst(list);
+
+    while(list->curr->nextElement != item){
+        list->curr = list->curr->nextElement;
+    }
+
+    list->curr->nextElement = item->nextElement;
+
+    item2 = item->nextElement;
+
+    item2->prevElement = list->isDoubly ? list->curr : NULL;
+
+    list->nElements--;
+
+    free(item->data);
+    free(item);
 }
 
 void dumpItem(TElementList* item, int size){
@@ -252,4 +319,8 @@ void showItems(TList* list, int numberOfElements){
 
 bool goFirst(TList* list){
     list->curr = list->first;
+}
+
+bool goNext(TList* list){
+    list->curr = !list->isCircle && (list->curr == list->last) ? NULL : list->curr->nextElement;
 }
