@@ -1,0 +1,11 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3529212410_1425540756_223132457.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_4217992463_2155513461.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_1930492429_625031915.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_4217992463_570757106.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_3932847989_339446801.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_3394500337_512130369.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_2056007277_621614225.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_2844360058_3290848731.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_2695607616_2060983707.mp4'
+file 'file:C:/Users/isaia/OneDrive/Documentos/Graduação/Graduacao/3o-Semestre/FisicaEletromagnetismo/media/videos/FisicaEletromagnetismo/1080p60/partial_movie_files/IntroScene/3040924799_2552855209_673654566.mp4'
