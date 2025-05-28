@@ -43,7 +43,9 @@ bool goNext(TList* list);
 int main(){
     TList list;
 
-    createList(&list, sizeof(int), true, true);
+    createList(&list, sizeof(int), false, false); // Caso em que a lista é circular e simplesmente linkada
+    printf("isCircle: %d\nisDoubly: %d\n\n", list.isCircle, list.isDoubly);
+
     dumpList(&list);
 
     int a = 1;
@@ -83,6 +85,7 @@ void createList(TList* list, int sizeELement, bool isCircle, bool isDoubly){
     list->last = NULL;
     list->curr = NULL;
     list->isCircle = isCircle;
+    list->isDoubly = isDoubly;
 }
 
 void destroyList(TList* list){
@@ -131,11 +134,8 @@ bool insertList(TList* list, byte* data){
                 // seta o proximo elemento
                 item->nextElement = list->isCircle ? item : NULL;
                 
-                if(list->isDoubly) {
-
-                    // seta o elemento anterior
-                    item->prevElement = list->isCircle ? item : NULL;
-                }
+                // seta o elemento anterior
+                item->prevElement = list->isCircle && list->isDoubly ? item : NULL;
 
                 //atualiza os ponteiros da lista
                 list->first = item;
@@ -154,7 +154,7 @@ bool insertList(TList* list, byte* data){
             list->last->nextElement = item;
             if(list->nElements == 1){
                 list->first->nextElement = item;
-                list->first->prevElement = list->isCircle ? item : NULL;
+                list->first->prevElement = list->isCircle && list->isDoubly? item : NULL;
             }
 
             // aloca area para o dado
@@ -170,7 +170,8 @@ bool insertList(TList* list, byte* data){
                 list->curr = item;
                 list->nElements++;
 
-                if(list->isDoubly) list->first->prevElement = list->isCircle ? list->last : NULL;
+                list->first->prevElement = list->isCircle && list->isDoubly ? list->last : NULL;
+                
 
             }
         }
@@ -295,7 +296,7 @@ void dumpList(TList* list){
 
     if(list->first != NULL){   
         item = list->first;
-        for(int i = 1; i <= list->nElements + 1; i++){
+        for(int i = 1; i <= list->nElements; i++){
             dumpItem(item, list->sizeELement);
             item = item->nextElement;
         }
