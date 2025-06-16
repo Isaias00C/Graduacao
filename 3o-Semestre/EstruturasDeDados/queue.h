@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-typedef struct Tfila{
+typedef struct Tqueue{
     char* buffer;
     char* first;
     char* last;
@@ -12,33 +12,21 @@ typedef struct Tfila{
     int maxElement;
 }queue;
 
-bool create(queue* queue, int sizeElement, int max);
-void destroy(queue* queue);
-bool put(queue* queue, char* data);
-bool get(queue* queue, char* data);
-bool empty(queue* queue);
-bool full(queue* queue);
-int size(queue* queue);
-void dump(queue* queue);
+bool create_queue(queue* queue, int sizeElement, int max);
+void destroy_queue(queue* queue);
+bool put_queue(queue* queue, char* data);
+bool get_queue(queue* queue, char* data);
+bool empty_queue(queue* queue);
+bool full_queue(queue* queue);
+int size_queue(queue* queue);
+void dump_queue(queue* queue);
 
-int main(){
-    queue queue;
-
-    create(&queue, sizeof(int), 5);
-
-    int a = 4;
-
-    put(&queue, &a);
-
-    dump(&queue);
-}
-
-bool create(queue* queue, int sizeElement, int max){
+bool create_queue(queue* queue, int sizeElement, int max){
     if (queue == NULL) return false;
 
     if (sizeElement == 0 || max == 0) return false;
-
-    if ((queue->buffer = malloc(sizeElement*max)) == NULL) return false; 
+    
+    if ((queue->buffer = (char*)malloc(sizeElement*max)) == NULL) return false; 
 
     queue->first = queue->buffer;
     queue->last = queue->buffer;
@@ -48,7 +36,7 @@ bool create(queue* queue, int sizeElement, int max){
     queue->size = 0;
 }
 
-void destroy(queue* queue){
+void destroy_queue(queue* queue){
     free(queue->buffer);
 
     queue->size = 0;
@@ -60,7 +48,7 @@ void destroy(queue* queue){
     queue->last = NULL;
 }
 
-bool put(queue* queue, char* data){
+bool put_queue(queue* queue, char* data){
     if (data == NULL) return false;
     
     if (queue->size < queue->maxElement){
@@ -77,14 +65,9 @@ bool put(queue* queue, char* data){
     }
 }
 
-bool get(queue* queue, char* data){
+bool get_queue(queue* queue, char* data){
     if (queue->size == 0) {
         printf("ERROR: fila vazia\n");
-        return false;
-    }
-
-    if (data == NULL) {
-        printf("data nao aponta para algum endereco\n");
         return false;
     }
 
@@ -100,23 +83,21 @@ bool get(queue* queue, char* data){
         
         if(queue->first >= queue->buffer + queue->maxElement*queue->sizeElement) queue->first = queue->first;
     }
-
-    queue->size--;
 }
 
-bool empty(queue* queue){
+bool empty_queue(queue* queue){
     return queue->size ? false : true;
 }
 
-bool full(queue* queue){
+bool full_queue(queue* queue){
     return queue->size == queue->maxElement ? true : false;
 }
 
-int size(queue* queue){
+int size_queue(queue* queue){
     return queue->size;
 }
 
-void dump(queue* fila){
+void dump_queue(queue* fila){
     char *current,*j;
     int i;
     printf("buffer = %04x\n", fila->buffer);

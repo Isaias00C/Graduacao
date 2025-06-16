@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-typedef struct Tfila{
+typedef struct Tstack{
     char* buffer;
     char* first;
     char* last;
@@ -12,49 +12,21 @@ typedef struct Tfila{
     int maxElement;
 }stack;
 
-bool create(stack* stack, int sizeElement, int max);
-void destroy(stack* stack);
-bool put(stack* stack, char* data);
-bool get(stack* stack, char* data);
-bool empty(stack* stack);
-bool full(stack* stack);
-int size(stack* stack);
-void dump(stack* stack);
+bool create_stack(stack* stack, int sizeElement, int max);
+void destroy_stack(stack* stack);
+bool put_stack(stack* stack, char* data);
+bool get_stack(stack* stack, char* data);
+bool empty_stack(stack* stack);
+bool full_stack(stack* stack);
+int size_stack(stack* stack);
+void dump_stack(stack* stack);
 
-int main(){
-    stack stack;
-
-    create(&stack, sizeof(int), 5);
-
-    int a = 1;
-    int b = 2;
-    int c = 3;
-    int d = 4;
-    int e = 5;
-    int f = 6;
-
-    put(&stack, &a);
-    put(&stack, &b);
-    put(&stack, &c);
-    put(&stack, &d);
-    put(&stack, &e);
-
-    int x;
-    get(&stack, &x);
-    get(&stack, &x);
-    get(&stack, &x);
-    get(&stack, &x);
-    get(&stack, &x);
-    printf("%d\n", x);
-    printf("%s\n", empty(&stack) ? "Yes" : "No");
-}
-
-bool create(stack* stack, int sizeElement, int max){
+bool create_stack(stack* stack, int sizeElement, int max){
     if (stack == NULL) return false;
 
     if (sizeElement == 0 || max == 0) return false;
 
-    if ((stack->buffer = malloc(sizeElement*max)) == NULL) return false; 
+    if ((stack->buffer = (char*)malloc(sizeElement*max)) == NULL) return false; 
 
     stack->first = stack->buffer;
     stack->last = stack->buffer;
@@ -64,7 +36,7 @@ bool create(stack* stack, int sizeElement, int max){
     stack->size = 0;
 }
 
-void destroy(stack* stack){
+void destroy_stack(stack* stack){
     free(stack->buffer);
 
     stack->size = 0;
@@ -76,7 +48,7 @@ void destroy(stack* stack){
     stack->last = NULL;
 }
 
-bool put(stack* stack, char* data){
+bool put_stack(stack* stack, char* data){
     if (data == NULL) return false;
 
     if (stack->size < stack->maxElement){
@@ -86,14 +58,14 @@ bool put(stack* stack, char* data){
 
         stack->size++;
     }else {
-        printf("ERROR: fila cheia\n");
+        printf("ERROR: pilha cheia\n");
         return false;
     }
 }
 
-bool get(stack* stack, char* data){
+bool get_stack(stack* stack, char* data){
     if (stack->size == 0) {
-        printf("ERROR: fila vazia\n");
+        printf("ERROR: pilha vazia\n");
         return false;
     }
 
@@ -109,19 +81,19 @@ bool get(stack* stack, char* data){
     }
 }
 
-bool empty(stack* stack){
+bool empty_stack(stack* stack){
     return stack->size ? false : true;
 }
 
-bool full(stack* stack){
+bool full_stack(stack* stack){
     return stack->size == stack->maxElement ? true : false;
 }
 
-int size(stack* stack){
+int size_stack(stack* stack){
     return stack->size;
 }
 
-void dump(stack* fila){
+void dump_stack(stack* fila){
     char *current,*j;
     int i;
     printf("buffer = %04x\n", fila->buffer);
@@ -143,3 +115,4 @@ void dump(stack* fila){
         printf("-----------------------\n");
     }
 }
+
