@@ -74,8 +74,8 @@ bool get_stack(stack* stack, char* data){
     stack->size--;
 
     if(stack->size == 0){
-        stack->first = NULL;
-        stack->last = NULL;
+        stack->first = stack->buffer;
+        stack->last = stack->buffer;
     }else{
         stack->last -= stack->sizeElement;
     }
@@ -116,3 +116,6 @@ void dump_stack(stack* fila){
     }
 }
 
+int top_stack(stack* fila){
+    return *(fila->last - fila->sizeElement);
+}
